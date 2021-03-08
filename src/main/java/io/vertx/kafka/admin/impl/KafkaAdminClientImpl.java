@@ -17,6 +17,7 @@
 package io.vertx.kafka.admin.impl;
 
 import io.vertx.kafka.admin.ListConsumerGroupOffsetsOptions;
+import io.vertx.kafka.admin.NewPartitions;
 import io.vertx.kafka.client.common.TopicPartition;
 import io.vertx.kafka.client.consumer.OffsetAndMetadata;
 import java.time.Duration;
@@ -45,6 +46,7 @@ import io.vertx.kafka.client.common.impl.Helper;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AlterConfigsResult;
 import org.apache.kafka.clients.admin.AlterConsumerGroupOffsetsResult;
+import org.apache.kafka.clients.admin.CreatePartitionsResult;
 import org.apache.kafka.clients.admin.CreateTopicsResult;
 import org.apache.kafka.clients.admin.DeleteConsumerGroupOffsetsResult;
 import org.apache.kafka.clients.admin.DeleteConsumerGroupsResult;
@@ -137,6 +139,19 @@ public class KafkaAdminClientImpl implements KafkaAdminClient {
 
     CreateTopicsResult createTopicsResult = this.adminClient.createTopics(Helper.toNewTopicList(topics));
     createTopicsResult.all().whenComplete((v, ex) -> {
+
+      if (ex == null) {
+        completionHandler.handle(Future.succeededFuture());
+      } else {
+        completionHandler.handle(Future.failedFuture(ex));
+      }
+    });
+  }
+
+  @Override
+  public void createPartitions(Map<String, NewPartitions> partitions, Handler<AsyncResult<Void>> completionHandler) {
+    CreatePartitionsResult createPartitionsResult = this.adminClient.createPartitions(Helper.toPartitions(partitions));
+    createPartitionsResult.all().whenComplete((v, ex) -> {
 
       if (ex == null) {
         completionHandler.handle(Future.succeededFuture());

@@ -99,6 +99,15 @@ public interface KafkaAdminClient {
   void createTopics(List<NewTopic> topics, Handler<AsyncResult<Void>> completionHandler);
 
   /**
+   * Creates a batch of new partitions in the Kafka topic
+   *
+   * @param partitions partitions to create
+   * @param completionHandler handler called on operation completed
+   */
+  @GenIgnore
+  void createPartitions(Map<String, NewPartitions> partitions, Handler<AsyncResult<Void>> completionHandler);
+
+  /**
    * Deletes a batch of Kafka topics
    *
    * @param topicNames the names of the topics to delete

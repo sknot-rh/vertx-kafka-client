@@ -242,6 +242,23 @@ Set the host where the group member is running
 +++
 |===
 
+[[NewPartitions]]
+== NewPartitions
+
+++++
+ A new partitions to be created
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[totalCount]]`@totalCount`|`Number (int)`|+++
+Set the number of partitions for the topic
++++
+|===
+
 [[NewTopic]]
 == NewTopic
 
